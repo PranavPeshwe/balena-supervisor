@@ -465,6 +465,120 @@ describe('compose/service', () => {
 		});
 	});
 
+	describe('Configuring service volumes', () => {
+		it('should add bind mounts using the mounts API', async () => {
+			const s = await Service.fromComposeObject(
+				{
+					appId: 123456,
+					serviceId: 123456,
+					serviceName: 'test',
+					tmpfs: ['/var/tmp'],
+					volumes: ['myvolume:/myvolume'],
+				},
+				{ appName: 'test' } as any,
+			);
+
+			// inject bind mounts (as feature labels would)
+			s.config.volumes.push('/sys:/sys:ro');
+			s.config.volumes.push(
+				`${constants.dockerSocket}:${constants.containerDockerSocket}`,
+			);
+
+			const c = s.toDockerContainer({ deviceName: 'foo' } as any);
+			expect(c)
+				.to.have.property('HostConfig')
+				.that.has.property('Mounts')
+				.that.includes.deep.members([
+					{
+						Type: 'bind',
+						Source: '/sys',
+						Target: '/sys',
+						ReadOnly: true,
+					},
+					{
+						Type: 'bind',
+						Source: constants.dockerSocket,
+						Target: constants.containerDockerSocket,
+						ReadOnly: false,
+					},
+					{
+						Type: 'volume',
+						Source: Volume.generateDockerName(123456, 'myvolume'),
+						Target: '/myvolume',
+						ReadOnly: false,
+					},
+					{
+						Type: 'tmpfs',
+						Source: '',
+						Target: '/var/tmp',
+					}
+				]);
+		});
+
+		it('should obtain the service volume config from docker configuration', () => {
+			const mockContainer = createContainer({
+				Id: 'deadbeef',
+				Name: 'main_431889_572579',
+				HostConfig: {
+					Binds: [
+						'testvolume:/testvolume',
+						'/proc:/proc:ro',
+					],
+					Tmpfs: {
+						'/var/tmp1': '',
+					},
+					Mounts: [
+						{
+							Type: 'bind',
+							Source: '/sys',
+							Target: '/sys',
+							ReadOnly: true,
+						},
+						{
+							Type: 'volume',
+							Source: 'anothervolume',
+							Target: '/anothervolume',
+							ReadOnly: false,
+						},
+						{
+							Type: 'tmpfs',
+							Source: '',
+							Target: '/var/tmp2',
+						},
+					],
+				},
+				Config: {
+					Volumes: {
+						'/var/lib/volume': {},
+					},
+					Labels: {
+						'io.resin.app-id': '1011165',
+						'io.resin.architecture': 'armv7hf',
+						'io.resin.service-id': '43697',
+						'io.resin.service-name': 'main',
+						'io.resin.supervised': 'true',
+					},
+				},
+			});
+			const s = Service.fromDockerContainer(mockContainer.inspectInfo);
+			expect(s.config)
+				.to.have.property('volumes')
+				.that.deep.equals([
+					'/var/lib/volume',
+					'testvolume:/testvolume',
+					'/proc:/proc:ro',
+					'/sys:/sys:ro',
+					'anothervolume:/anothervolume',
+				]);
+			expect(s.config)
+				.to.have.property('tmpfs')
+				.that.deep.equals([
+					'/var/tmp1',
+					'/var/tmp2',
+				]);
+		});
+	});
+
 	describe('Comparing services', () => {
 		describe('Comparing array parameters', () => {
 			it('Should correctly compare ordered array parameters', async () => {
