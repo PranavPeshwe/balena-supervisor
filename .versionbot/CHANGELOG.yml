@@ -1,4 +1,15 @@
 - commits:
+    - subject: Bootstrap supervisor configuration on container start
+      hash: 64ce26e8d1831f359baed9b673e921089f68a0ac
+      body: "This change goes in line with making the supervisor more like an app. This\nreduces the number of parameters that need to be given to start the\nsupervisor container, moving it closer to something that could be\nstarted by the supervisor itself. This should allow to greatly simplify\nthe supervisor [start script](https://github.com/balena-os/meta-balena/blob/master/meta-balena-common/recipes-containers/balena-supervisor/balena-supervisor/start-balena-supervisor)\n\nThis is now the minimal startup configuration for the container\n\n```\nbalena run --privileged --name balena_supervisor \\\n\t--restart=always \\\n\t--net=host \\\n\t--cidenv=SUPERVISOR_CONTAINER_ID \\\n\t--mount type=bind,source=/var/run/balena-engine.sock,target=/var/run/balena-engine.sock \\\n\t--mount type=bind,source=/,target=/mnt/root \\\n\t-e DOCKER_SOCKET=/var/run/balena-engine.sock \\\n\t\"${SUPERVISOR_IMAGE}:${SUPERVISOR_TAG}\"\n```\n"
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+  version: 12.11.12
+  date: 2021-11-17T20:00:16.103Z
+- commits:
     - subject: 'backends/extra-uEnv: Extend custom DTB support for Nano 2GB Devkit'
       hash: 3b9c68246e984aea99d03953060c435dad59d117
       body: ''
