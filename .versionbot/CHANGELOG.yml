@@ -1,4 +1,18 @@
 - commits:
+    - subject: Use `writeAndSync` when writing to config.json
+      hash: 43917d4309be5f62e415195b82f03a04a32506c3
+      body: |
+        `/mnt/boot` is a vfat partition which does not support atomic file
+        rename. The best course of action is to write and sync as fast as
+        possible to prevent corruption (although it still may happen)
+      footer:
+        Change-type: patch
+        change-type: patch
+      author: Felipe Lalanne
+      nested: []
+  version: 12.11.30
+  date: 2022-01-26T22:08:29.583Z
+- commits:
     - subject: 'patch: Update fleet terminology for application update locks'
       hash: 6357d3541ea726db565be947b3f9e4484707389c
       body: ''
