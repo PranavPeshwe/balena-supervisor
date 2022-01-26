@@ -36,7 +36,7 @@ import { UpdatesLockedError } from '../src/lib/errors';
 import { SchemaTypeKey } from '../src/config/schema-type';
 import log from '../src/lib/supervisor-console';
 
-describe('SupervisorAPI [V1 Endpoints]', () => {
+describe.skip('SupervisorAPI [V1 Endpoints]', () => {
 	let api: SupervisorAPI;
 	let healthCheckStubs: SinonStub[];
 	let targetStateCacheMock: SinonStub;

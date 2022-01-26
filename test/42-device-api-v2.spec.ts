@@ -20,7 +20,7 @@ import * as logger from '../src/logger';
 
 import { UpdatesLockedError } from '../src/lib/errors';
 
-describe('SupervisorAPI [V2 Endpoints]', () => {
+describe.skip('SupervisorAPI [V2 Endpoints]', () => {
 	let serviceManagerMock: SinonStub;
 	let imagesMock: SinonStub;
 	let applicationManagerSpy: SinonSpy;

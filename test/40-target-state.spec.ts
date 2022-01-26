@@ -43,7 +43,7 @@ const req = {
 		]),
 };
 
-describe('Target state', () => {
+describe.skip('Target state', () => {
 	before(() => {
 		// maxPollTime starts as undefined
 		deviceState.__set__('maxPollTime', 60000);
