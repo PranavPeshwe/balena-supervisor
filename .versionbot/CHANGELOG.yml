@@ -1,4 +1,25 @@
 - commits:
+    - subject: Switch to using centralied input validator for all routes
+      hash: eed6513d70c5528efd582d98b3eb5643679eabab
+      body: >
+        To add a new validator for a route, simply define a schema with an io-ts
+
+        type based on the existing types and examples.
+
+
+        The existing implementation could be improved BUT it would break existing
+
+        API interfaces.
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: Christina Wang <cywang117@outlook.com>
+        signed-off-by: Christina Wang <cywang117@outlook.com>
+      author: Christina Wang
+      nested: []
+  version: 12.12.0
+  date: 2022-02-02T19:33:28.284Z
+- commits:
     - subject: Use `writeAndSync` when writing to config.json
       hash: d071cd1507b8424628afa96ea1b1ed6b19225651
       body: |
