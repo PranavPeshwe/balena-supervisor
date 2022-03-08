@@ -56,6 +56,10 @@ fi
 # not a problem.
 modprobe ip6_tables || true
 
+# Cleanup leftover Supervisor-created lockfiles from any previous processes.
+# Supervisor-created lockfiles have a UID of 65534.
+find /mnt/root/tmp/balena-supervisor/services -type f -user 65534 -name "*updates.lock" | xargs rm
+
 if [ "${LIVEPUSH}" = "1" ]; then
 	exec npx nodemon --watch src --watch typings --ignore tests -e js,ts,json \
 		 --exec node -r ts-node/register/transpile-only src/app.ts
