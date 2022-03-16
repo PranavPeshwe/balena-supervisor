@@ -1,4 +1,38 @@
 - commits:
+    - subject: Add lockfile binary and internal lib for interfacing with it
+      hash: ca27954143ea6f8bd44de2fbc91b70452fb02d03
+      body: >
+        The linked issue describes the Supervisor not cleaning up locks it
+        creates due
+
+        to crashing at just the wrong time. After internal discussion we decided to
+
+        differentiate Supervisor-created lockfiles from user-created lockfiles by using
+
+        the `nobody` UID (65534) for Supervisor-created lockfiles.
+
+
+        As the existing NPM lockfile lib does not allow creating lockfiles atomically
+
+        with different UIDs, we move to using the lockfile binary, which is part of the
+
+        procmail package. To allow nonroot users to write to lock directories, permissions
+
+        are changed to allow write access by nonroot users.
+      footer:
+        See: https://www.flowdock.com/app/rulemotion/r-resinos/threads/gWMgK5hmR26TzWGHux62NpgJtVl
+        see: https://www.flowdock.com/app/rulemotion/r-resinos/threads/gWMgK5hmR26TzWGHux62NpgJtVl
+        Change-type: minor
+        change-type: minor
+        Closes: "#1758"
+        closes: "#1758"
+        Signed-off-by: Christina Wang <christina@balena.io>
+        signed-off-by: Christina Wang <christina@balena.io>
+      author: Christina Wang
+      nested: []
+  version: 12.12.0
+  date: 2022-03-16T22:31:03.747Z
+- commits:
     - subject: Added PR template doc
       hash: edcbb622d84bc1290cc5ce0ef7929a9ef9195df4
       body: ""
