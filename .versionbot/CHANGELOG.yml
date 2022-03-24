@@ -1,4 +1,28 @@
 - commits:
+    - subject: Use HostConfig.Mounts to bind paths into container
+      hash: 8c8d49034de52140823abc9a51f324e0a95734a4
+      body: |
+        When using the binds api the docker engine will auto-create the host
+        path as a directory if it doesn't exist. This can lead to unintended
+        side-effects when the source is a file (like when bind-mounting the
+        docker socket), as seen in the linked issue.
+
+        This also handles tmpfs and named volumes previously set without Mounts,
+        we take Config.Volumes, HostConfig.Binds and HostConfig.Tmpfs and
+        deduplicate over the full set.
+
+        Closes https://github.com/balena-os/balena-supervisor/issues/1231
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Robert Günzler <robertg@balena.io>
+        signed-off-by: Robert Günzler <robertg@balena.io>
+      author: Robert Günzler
+      nested: []
+  version: 12.11.44
+  title: "'Use mount instead of binds to bind mount paths into the container'"
+  date: 2022-03-24T15:36:13.462Z
+- commits:
     - subject: Always add status to image download report
       hash: 21c1c006f7b8dfcf566f3e4a8e853e5e9978edf4
       body: |
