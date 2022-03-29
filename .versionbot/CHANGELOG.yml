@@ -1,4 +1,18 @@
 - commits:
+    - subject: Added `BALENA_SUPERVISOR_REPORT_INTERVAL` config
+      hash: 219b37eef7575364b5786593fb00ca1b27352306
+      body: ""
+      footer:
+        Change-type: minor
+        change-type: minor
+        Signed-off-by: 20k-ultra <3946250+20k-ultra@users.noreply.github.com>
+        signed-off-by: 20k-ultra <3946250+20k-ultra@users.noreply.github.com>
+      author: 20k-ultra
+      nested: []
+  version: 13.1.0
+  title: "'Added  config'"
+  date: 2022-03-29T23:22:38.745Z
+- commits:
     - subject: Add support for GET v3 target state
       hash: 7425d1110b719dffd132c681c6e0c28fcc218dea
       body: |
